@@ -3,7 +3,7 @@ import express from "express";
 const app = express() ,
 
 PORT = process.env.PORT || 5000
-
+// good lock
 
 app.get('/',(req,res)=>{
     res.send("hello")
