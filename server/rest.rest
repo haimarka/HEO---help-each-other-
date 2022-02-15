@@ -2,9 +2,9 @@ POST http://localhost:5000/register/volunteer
 Content-Type: application/json
 
 {
-    "name": "test",
+    "name": "tebjnm,,vhjjv.l;st",
     "lastName": "nnn",
     "email": "ajkvdvi@gmail.com",
     "city": "Lod",
-    "phoneNumber": "050cd1234567"
+    "phoneNumber": "050cdfghjkl;'cvbnm./7"
 }

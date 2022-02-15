@@ -14,12 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "concurrently": "^7.0.0",
-    "cors": "^2.8.5",
-=======
     "dotenv": "^16.0.0",
->>>>>>> 5319d014dbcac26c5200248a1be9e629574ae888
     "express": "^4.17.2",
     "mongodb": "^4.3.1",
     "nodemon": "^2.0.15"
