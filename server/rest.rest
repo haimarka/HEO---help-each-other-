@@ -1,1 +1,10 @@
-GET http://localhost:5000/click
+POST http://localhost:5000/register/volunteer
+Content-Type: application/json
+
+{
+    "name": "test",
+    "lastName": "nnn",
+    "email": "ajkvdvi@gmail.com",
+    "city": "Lod",
+    "phoneNumber": "050cd1234567"
+}
