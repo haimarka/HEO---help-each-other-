@@ -11,14 +11,14 @@ const PORT = process.env.PORT || 5000;
 // good lock
 
 import { registerVolunteers ,clientRegister} from "./utils/register.js";
-import {creatOccupation} from "./utils/occupations.js"
+import {creatData} from "./utils/data.js"
 
 const app = express();
 app.use(express.json());
 
 
 app.get("/api",(req,res)=>{
-  creatOccupation(req,res)
+  creatData(req,res)
 })
 
 
