@@ -6,15 +6,15 @@ const MongoClient = mongo.MongoClient;
 const objectID = mongo.ObjectId;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
 const DATA_BASE = "freeToHelp";
-const  occupationCollection = "occupation"
+const  dataCollection = "data"
 
 
- const occupationDataJson = fs.readFileSync("./public/data.json", "utf8");
- const occupationData = JSON.parse(occupationDataJson); 
-console.log(occupationData);
+ const dataJson = fs.readFileSync("./public/data.json", "utf8");
+ const data = JSON.parse(dataJson); 
+console.log(data);
 
 
-const creatOccupation = async (req, res) => {
+const creatData = async (req, res) => {
     const client = await MongoClient.connect(MONGO_URL).catch((err) => {
       throw err;
     });
@@ -26,9 +26,9 @@ const creatOccupation = async (req, res) => {
     try {
       const db = client.db(DATA_BASE);
   
-      const collection = db.collection(occupationCollection);
+      const collection = db.collection(dataCollection);
   
-      const result = await collection.insertOne(occupationData);
+      const result = await collection.insertOne(data);
   
       res.status(201).send(result);
     } catch (err) {
@@ -41,5 +41,5 @@ const creatOccupation = async (req, res) => {
   
 
   export {
-    creatOccupation
+    creatData
   }
