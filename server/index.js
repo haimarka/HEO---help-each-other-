@@ -12,9 +12,17 @@ const PORT = process.env.PORT || 5000;
 
 import { registerVolunteers ,clientRegister} from "./utils/register.js";
 
-
+ 
 const app = express();
 app.use(express.json());
+
+// app.get("/", (req, res) => {
+//   console.log('working');
+// });
+
+app.post("/", (req, res) => {
+  console.log('working post');
+});
 
 app.post("/register/volunteer", (req, res) => {
   registerVolunteers(req, res);
