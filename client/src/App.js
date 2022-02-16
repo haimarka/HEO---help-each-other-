@@ -5,7 +5,6 @@ import Home from './pages/home/Home';
 import About from './pages/about/About';
 import LogIn from './pages/login/LogIn';
 import Register from './pages/register/Register';
-import Search from './pages/search/Search';
 import Navigation from "./components/Navigation";
 import { useState } from "react";
 
@@ -20,7 +19,6 @@ const [auth,setAuth]=useState(null);
         <Route exact path='/About' render={()=><About/>}/>
         <Route exact path='/LogIn' render={()=><LogIn/>}/>
         <Route exact path='/Register' render={()=><Register auth={auth} setAuth={setAuth}/>}/>
-        <Route exact path='/Search' render={()=><Search/>}/>
     </Switch>
     <footer>Free To Help 2022 &copy;</footer>
     </div>
