@@ -19,3 +19,6 @@ Content-Type: application/json
     "occupation" : "babysitter"
     
 }
+
+###
+GET http://localhost:5000/api

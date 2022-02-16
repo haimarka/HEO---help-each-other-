@@ -11,10 +11,16 @@ const PORT = process.env.PORT || 5000;
 // good lock
 
 import { registerVolunteers ,clientRegister} from "./utils/register.js";
-
+import {creatOccupation} from "./utils/occupations.js"
 
 const app = express();
 app.use(express.json());
+
+
+app.get("/api",(req,res)=>{
+  creatOccupation(req,res)
+})
+
 
 app.post("/register/volunteer", (req, res) => {
   registerVolunteers(req, res);
@@ -23,6 +29,9 @@ app.post("/register/volunteer", (req, res) => {
 app.post("/register/client", (req, res) => {
   clientRegister(req, res);
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`server is loading ...... ${PORT}`);
