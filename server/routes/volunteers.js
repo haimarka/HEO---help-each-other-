@@ -10,7 +10,7 @@ router.post("/register", (req, res) => {
   registerVolunteers(req, res);
 });
 
-router.get("/volunteer", (req, res) => {
+router.get("/volunteer/:city/:occupation", (req, res) => {
   searchVolunteer(req, res);
 });
 

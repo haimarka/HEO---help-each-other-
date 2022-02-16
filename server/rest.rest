@@ -7,9 +7,9 @@ Content-Type: application/json
     "email": "dana@gmail.com",
     "city": "Lod",
     "phoneNumber": "+972545807641",
-    "occupation": "General",
+    "occupation": "Electritcian",
     "category": "Elderly",
-    "gender": "male",
+    "gender": "female",
     "profileImg": "",
     "available": ""
 }
@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/api
+GET http://localhost:5000/api/data/fetch
 
 ###
-GET  http://localhost:5000/data
+GET http://localhost:5000/api/volunteers/volunteer/Lod/Gen
