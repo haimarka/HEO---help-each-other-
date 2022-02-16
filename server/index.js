@@ -13,6 +13,14 @@ import dataRouter from "./routes/data.js";
 const app = express();
 app.use(express.json());
 
+
+// app.get("/", (req, res) => {
+//   console.log('working');
+// });
+
+app.post("/", (req, res) => {
+  console.log('working post');
+});
 app.use('/api/users', usersRouter);
 app.use('/api/volunteers', volunteersRouter);
 app.use('/api/data', dataRouter);
@@ -24,7 +32,7 @@ app.use('/api/data', dataRouter);
 //   createData(req,res)
 // });
 
-// app.get("/data", (req, res) => {
+// app.get("/api/data", (req, res) => {
 //   getData(req, res);
 // })
 
