@@ -4,9 +4,10 @@ import fireBaseApi from "../../logic/key";
 import { Spinner } from "react-bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./register.module.css";
-const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
+const Register = ({ setAuth }) => {
+  const[data,setData]=useState([]);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [telephone, setTelephone] = useState("");
   const [city, setCity] = useState([]);
@@ -15,24 +16,25 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
-  useEffect(()=>{
-    axios.get("/data")
-    .then(res=>console.log(res.data))
-    .catch(err=>err)
-    },[]);
+
+  useEffect(() => {
+    axios
+      .get("/api/data/fetch")
+      .then((res) => setData(res.data[0]))
+      .catch((err) => err);
+  }, []);
   const registerForm = () => {
     setLoading(true);
     axios
       .post(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${fireBaseApi}`,
         {
-          email,
-          password,
+          email
         }
       )
       .then(function (response) {
         axios
-          .post("/register/volunteer", {
+          .post("/api/volunteers/register", {
           fullName:fullName,
           email:email,
           telephone:telephone,
@@ -46,16 +48,9 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
           .catch(function (error) {
             console.log(error.res);
           });
-        setTimeout(() => {
           setLoading(false);
           setAuth(response.data);
-          setUser(response.data.localId);
-          console.log(response.data, "responseData");
-          localStorage.setItem(
-            USERֹֹ_INFORMATIOM,
-            JSON.stringify(response.data)
-          );
-        }, 2000);
+            // JSON.stringify(response.data)
       })
       .catch(function (error) {
         console.log(error);
@@ -65,23 +60,19 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
         setLoading(false);
       });
   };
-  const formValidation = () => {
-    return email.length && password.length;
-  };
   return (
     <div className={style.BoxContainer}>
       <div className={style.container}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (formValidation()) {
               registerForm();
-            }
           }}
         >
           <img
             className={style.brandLogo}
-            src="C:\Users\97254\Desktop\FreeToHelp.png"
+            src="https://i.ibb.co/KmpTG7h/Free-To-Help.png" width="5%"
+            height="5%"
           />
           <p className={style.brandTitle}>FreeToHelp</p>
           <div className={style.inputs}>
@@ -93,7 +84,6 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
               required
               onChange={(e) => {
                 setFullName(e.target.value);
-                setDisabled(formValidation());
               }}
             />
             <label>EMAIL</label>
@@ -103,7 +93,6 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
               placeholder="example@test.com"
               onChange={(e) => {
                 setEmail(e.target.value);
-                setDisabled(formValidation());
               }}
             />
                <label>TELEPHONE</label>
@@ -114,10 +103,13 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
               required
               onChange={(e) => {
                 setTelephone(e.target.value);
-                setDisabled(formValidation());
               }}
             />
-            <label>PASSWORD</label>
+          <label>CITY</label>
+          {data.cities?.length?<select>{data.cities.map((item,i)=>{
+            return<option key={i}>{item.name}</option>
+          })}</select>:""}
+            {/* <label>PASSWORD</label>
             <input
               className={style.Input}
               type="password"
@@ -138,7 +130,7 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
                 setPassword(e.target.value);
                 setDisabled(formValidation());
               }}
-            />
+            /> */}
             )
             {loading ? (
               <p>
@@ -158,7 +150,7 @@ const Register = ({ setAuth, USERֹֹ_INFORMATIOM, setFlag, setUser }) => {
         </form>
       </div>
     </div>
-  );
+  )
 };
 
 export default Register;
