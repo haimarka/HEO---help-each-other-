@@ -8,7 +8,7 @@ const DATA_BASE = "freeToHelp";
 const volunteerCollection = "volunteers";
 const clientCollection = "clients";
 
-const register = async (req, res) => {
+const registerVolunteers = async (req, res) => {
   const client = await MongoClient.connect(MONGO_URL).catch((err) => {
     throw err;
   });
@@ -34,5 +34,47 @@ const register = async (req, res) => {
   }
 };
 
+async function clientRegister(req, res) {
+  const client = await MongoClient.connect(MONGO_URL);
+  if (!client) {
+    return;
+  }
 
-export { register };
+  try {
+    console.log("Connected correctly to server");
+    const db = client.db(DATA_BASE);
+    const foundResult = await db
+      .collection(clientCollection)
+      .findOne({ phoneNumber: req.body.phoneNumber });
+
+    console.log(foundResult);
+
+    if (foundResult) {
+      console.log("found");
+      const updateResult = await db
+        .collection(clientCollection)
+        .updateOne(
+          { phoneNumber: req.body.phoneNumber },
+          { $push: { occupation: req.body.occupation } }
+        );
+      console.log(updateResult);
+      res.sendStatus(201);
+    } else {
+      const user = {};
+      user.phoneNumber = req.body.phoneNumber;
+      user.occupation = [req.body.occupation];
+      console.log("not found");
+      const insertResult = await db
+        .collection(clientCollection)
+        .insertOne(user);
+      console.log(insertResult);
+      res.sendStatus(201);
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+
+  client.close();
+}
+
+export { registerVolunteers, clientRegister };
