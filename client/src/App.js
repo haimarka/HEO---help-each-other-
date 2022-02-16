@@ -13,9 +13,7 @@ function App() {
     <BrowserRouter>
     <div className="App">
       <Navigation/>
-      {/* <h1 onClick={async()=>{
-        await axios.get('/click');
-      }}>Hello Team Winners For Ever!!!1</h1> */}
+      
     <Switch> 
         <Route exact path='/' component={Home}/>
         <Route exact path='/About' render={()=><About/>}/>
