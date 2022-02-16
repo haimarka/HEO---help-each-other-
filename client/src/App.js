@@ -9,6 +9,7 @@ import Search from './pages/search/Search';
 import Navigation from "./components/Navigation";
 
 function App() {
+  
   return (
     <BrowserRouter>
     <div className="App">
