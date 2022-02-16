@@ -9,9 +9,9 @@ const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
 const DATA_BASE = "freeToHelp";
 const PORT = process.env.PORT || 5000;
 
-import {creatOccupation} from "./utils/occupations.js"
 import { registerVolunteers ,clientRegister} from "./utils/register.js";
 import { searchByCity } from "./utils/search.js";
+import {creatData} from "./utils/data.js"
 
 const app = express();
 app.use(express.json());
@@ -21,7 +21,7 @@ app.post("/", (req, res) => {
 });
 
 app.get("/api",(req,res)=>{
-  creatOccupation(req,res)
+  creatData(req,res)
 })
 
 app.get("/volunteer/:city",(req,res)=>{
