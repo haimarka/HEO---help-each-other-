@@ -1,0 +1,21 @@
+{
+    "occupation":[
+        {
+            "id":"1",
+            "name":"Designer"                        
+        },
+        {
+            "id":"2",
+            "name":"electrician"                        
+        }, {
+            "id":"3",
+            "name":"Taxi driver"                        
+        }, {
+            "id":"4",
+            "name":"plumber"                        
+        }, {
+            "id":"5",
+            "name":"Hair Stylist"                        
+        }
+    ]
+}

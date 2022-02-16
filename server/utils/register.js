@@ -8,6 +8,7 @@ const DATA_BASE = "freeToHelp";
 const volunteerCollection = "volunteers";
 const clientCollection = "clients";
 
+
 const registerVolunteers = async (req, res) => {
   const client = await MongoClient.connect(MONGO_URL).catch((err) => {
     throw err;
@@ -46,7 +47,6 @@ async function clientRegister(req, res) {
     const foundResult = await db
       .collection(clientCollection)
       .findOne({ phoneNumber: req.body.phoneNumber });
-
     console.log(foundResult);
 
     if (foundResult) {
