@@ -7,6 +7,8 @@ const MongoClient = mongo.MongoClient;
 const objectID = mongo.ObjectId;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
 const DATA_BASE = "freeToHelp";
+const PORT = process.env.PORT || 5000;
+// good lock
 
 import { registerVolunteers ,clientRegister} from "./utils/register.js";
 
@@ -21,8 +23,6 @@ app.post("/register/volunteer", (req, res) => {
 app.post("/register/client", (req, res) => {
   clientRegister(req, res);
 });
-
-const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`server is loading ...... ${PORT}`);
