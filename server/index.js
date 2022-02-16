@@ -40,7 +40,6 @@ app.use('/api/data', dataRouter);
 //   clientRegister(req, res);
 // });
 
-
 app.listen(PORT, () => {
   console.log(`server is loading ...... ${PORT}`);
 });
