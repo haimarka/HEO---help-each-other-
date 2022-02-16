@@ -10,17 +10,18 @@ const DATA_BASE = "freeToHelp";
 const PORT = process.env.PORT || 5000;
 // good lock
 
-import { register } from "./utils/register.js";
+import { registerVolunteers ,clientRegister} from "./utils/register.js";
+
 
 const app = express();
 app.use(express.json());
 
 app.post("/register/volunteer", (req, res) => {
-  register(req, res);
+  registerVolunteers(req, res);
 });
 
 app.post("/register/client", (req, res) => {
-  register(req, res);
+  clientRegister(req, res);
 });
 
 app.listen(PORT, () => {

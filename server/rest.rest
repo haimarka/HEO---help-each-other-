@@ -8,3 +8,14 @@ Content-Type: application/json
     "city": "Lod",
     "phoneNumber": "050cdfghjkl;'cvbnm./7"
 }
+
+
+###
+POST http://localhost:5000/register/client
+Content-Type: application/json
+
+{
+    "phoneNumber": "050ruti",
+    "occupation" : "babysitter"
+    
+}
