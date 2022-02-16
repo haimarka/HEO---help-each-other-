@@ -16,15 +16,17 @@ function App() {
       {/* <h1 onClick={async()=>{
         await axios.get('/click');
       }}>Hello Team Winners For Ever!!!1</h1> */}
-    <Switch>
+    <Switch> 
         <Route exact path='/' component={Home}/>
         <Route exact path='/About' render={()=><About/>}/>
         <Route exact path='/LogIn' render={()=><LogIn/>}/>
         <Route exact path='/Register' render={()=><Register/>}/>
         <Route exact path='/Search' render={()=><Search/>}/>
     </Switch>
+    <footer>Free To Help 2022 &copy;</footer>
     </div>
   </BrowserRouter>
+  
   );
 }
 
