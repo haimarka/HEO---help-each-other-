@@ -1,0 +1,52 @@
+import mongo from "mongodb";
+import dotenv from "dotenv";
+dotenv.config();
+const MongoClient = mongo.MongoClient;
+const objectID = mongo.ObjectId;
+const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
+const DATA_BASE = "freeToHelp";
+const clientCollection = "clients";
+
+async function clientRegister(req, res) {
+  const client = await MongoClient.connect(MONGO_URL);
+  if (!client) {
+    return;
+  }
+
+  try {
+    console.log("Connected correctly to server");
+    const db = client.db(DATA_BASE);
+    const foundResult = await db
+      .collection(clientCollection)
+      .findOne({ phoneNumber: req.body.phoneNumber });
+    console.log(foundResult);
+
+    if (foundResult) {
+      console.log("found");
+      const updateResult = await db
+        .collection(clientCollection)
+        .updateOne(
+          { phoneNumber: req.body.phoneNumber },
+          { $push: { occupation: req.body.occupation } }
+        );
+      console.log(updateResult);
+      res.sendStatus(201);
+    } else {
+      const user = {};
+      user.phoneNumber = req.body.phoneNumber;
+      user.occupation = [req.body.occupation];
+      console.log("not found");
+      const insertResult = await db
+        .collection(clientCollection)
+        .insertOne(user);
+      console.log(insertResult);
+      res.sendStatus(201);
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+
+  client.close();
+}
+
+export { clientRegister };
