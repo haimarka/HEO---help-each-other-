@@ -14,7 +14,7 @@ export default function About() {
       <button onClick={()=>handleClick('il')} > עברית </button>
 
         <h2>About</h2>
-        <article>
+        <article> 
             <p >{t("about.1")}</p>
         </article>
     </div>
