@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import fireBaseApi from "../../logic/key";
+// import fireBaseApi from "../../logic/key";
 import { Spinner } from "react-bootstrap";
 import PhoneNumber from "../authPhone/PhoneNumber";
 // import "bootstrap/dist/css/bootstrap.min.css";
