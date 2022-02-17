@@ -5,14 +5,16 @@ import { Spinner } from "react-bootstrap";
 import PhoneNumber from "../authPhone/PhoneNumber";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./register.module.css";
+import { async, isIndexedDBAvailable } from "@firebase/util";
 const Register = ({ setAuth }) => {
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("MEN");
   const [fullName, setFullName] = useState("");
   const [telephone, setTelephone] = useState("");
-  const [city, setCity] = useState("");
-  const [categorys, setCategorys] = useState("");
+  const [city, setCity] = useState("abo ghosh");
+  const [categories, setCategories] = useState([]);
   const [occupations, setOccupations] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,51 +26,51 @@ const Register = ({ setAuth }) => {
       .then((res) => setData(res.data[0]))
       .catch((err) => err);
   }, []);
-  const registerForm = () => {
-    setLoading(true);
-    axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${fireBaseApi}`,
-        {
-          email,password
-        }
-      )
-      .then(function (response) {
-        axios
-          .post("/api/volunteers/register", {
-            fullName: fullName,
+
+  const registerForm = async () => {
+
+      setLoading(true);
+    const result = await axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${fireBaseApi}`,
+      {
+        email,
+        password,
+      }
+    );
+      console.log(result);
+    if(result.status == 201){
+      const newUser = {
+        fullName: fullName,
             email: email,
             telephone: telephone,
             city: city,
-            password,
-            occupations: occupations,
-            categorys: categorys,
-          })
-          .then(function (res) {
-            console.log(res.data, "resData");
-          })
-          .catch(function (error) {
-            console.log(error.res);
-          });
-        setLoading(false);
-        setAuth(response.data);
-        // JSON.stringify(response.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-        const errorMessage = error.response.data.error.message;
-        console.log(errorMessage);
+            password: password,
+            gender: gender,
+            occupations: occupations.length?["other"]:occupations,
+            categories: categories.length?["other"]:occupations,
+            start: start,
+            end: end,
+      }
+      const user = await axios.post("/api/volunteers/register", newUser);
+      if(result.status == 201){
+        setErrorMessage("");
+      }
+    }else{
+      const errorMessage = result.response.data.error.message;
+      console.log(errorMessage);
         setErrorMessage(errorMessage);
-        setLoading(false);
-      });
+    }
+    setLoading(false);
   };
+
   return (
     <div className={style.BoxContainer}>
       <div className={style.container}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            registerForm();
+            if (!password){
+              registerForm();}
           }}
         >
           <img
@@ -86,7 +88,7 @@ const Register = ({ setAuth }) => {
               type="text"
               placeholder="Full-Name"
               required
-              onChange={(e) => {
+              onBlur={(e) => {
                 setFullName(e.target.value);
               }}
             />
@@ -97,21 +99,20 @@ const Register = ({ setAuth }) => {
               className={style.Input}
               type="email"
               placeholder="example@test.com"
-              onChange={(e) => {
+              onBlur={(e) => {
                 setEmail(e.target.value);
               }}
-            /><br/>
-            <label>CITY</label><br/>
+            />
+            <br />
+            <label>CITY</label>
+            <br />
             {data.cities?.length ? (
-              <select>
+              <select onBlur={(e)=>{setCity(e.target.value);}}>
                 {data.cities.map((item, i) => {
                   return (
                     <option
-                    value={item.english_name}
-                    key={i}
-                    onChange={(e) => {
-                      setCity(e.target.value);
-                    }}
+                      value={item.english_name}
+                      key={i}
                     >
                       {item.english_name}
                     </option>
@@ -120,47 +121,128 @@ const Register = ({ setAuth }) => {
               </select>
             ) : (
               ""
-              )}
-            {/* <label>PASSWORD</label>
-            <input
-            className={style.Input}
-            type="password"
-            placeholder="Min 6 charaters long"
-            required
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setDisabled(formValidation());
-            }}
-            />
-            <label>CONFIRM PASSWORD</label>
-            <input
-            className={style.Input}
-            type="password"
-            placeholder="Min 6 charaters long"
-            required
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setDisabled(formValidation());
-            }}
-          /> */}
-
-          {password?<input
-                className={style.SubmitButton}
-                autoComplete="on"
-                type="submit"
-                value="Register"
-                />:""}
-            {loading ? (
-              <p>
-                <Spinner animation="border" variant="danger" />
-              </p>
+            )}
+            <br />
+            <label>CATEGORIES</label>
+            <br />
+            {data.categories?.length ? (
+              <div>
+                {data.categories.map((item, i) => {
+                  return (
+                    <label key={i}>
+                      {item.english_name}
+                      <input
+                        type="checkbox"
+                        key={i}
+                        onClick={(e) => {
+                          const arrayCategories=[...categories];
+                          console.log(e.target.checked);
+                          if(e.target.checked == true){
+                            arrayCategories.push(item.english_name)
+                            setCategories(arrayCategories)
+                          }else{
+                            let check = arrayCategories.findIndex((element)=>element == item.english_name);
+                            arrayCategories.splice(check,1)
+                            setCategories(arrayCategories)
+                          }
+                       
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
             ) : (
               ""
-              )}
+            )}
+            <br />
+            <label>OCCUPATIONS</label>
+            <br />
+            {data.occupation?.length ? (
+              <div>
+                {data.occupation.map((item, i) => {
+                  return (
+                    <label key={i}>
+                      {item.english_name}
+                      <input
+                        type="checkbox"
+                        key={i}
+                        onChange={(e) => {
+                          setOccupations(e.target.value);
+                        }}
+                        onClick={(e) => {
+                          const arrayOccupations=[...occupations];
+                          console.log(e.target.checked);
+                          if(e.target.checked == true){
+                            arrayOccupations.push(item.english_name)
+                            setOccupations(arrayOccupations)
+                          }else{
+                            let check = arrayOccupations.findIndex((element)=>element == item.english_name);
+                            arrayOccupations.splice(check,1)
+                            setOccupations(arrayOccupations)
+                          }
+                       
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            ) : (
+              ""
+            )}
+            <br />
+            <label>GENDER</label>
+            <br />
+            <select onChange={(e) => {
+                  setGender(e.target.value);
+                }}>
+              <option
+                value="MEN"
+              >
+                MEN
+              </option>
+              <option
+                value="WOMEN"
+              >
+                WOMEN
+              </option>
+            </select>
+            <br />
+            <label>AVAILABILITY</label>
+            <br />
+            <input
+              onChange={(e) => {
+                setStart(e.target.value);
+              }}
+              type="time"
+            />
+            <input
+              onChange={(e) => {
+                setEnd(e.target.value);
+              }}
+              type="time"
+            />
+            {
+            loading 
+            ?              
+              <Spinner animation="border" variant="danger" />
+            : 
+              ""
+            }
           </div>
-          <p style={{ color: "red" }}>{errorMessage ? errorMessage : ""}</p>
+        <PhoneNumber setTelephone={setTelephone} setPassword={setPassword} password={password}/>
+          {!password ? 
+           <input
+           className={style.SubmitButton}
+           autoComplete="on"
+           type="submit"
+           value="Register"
+           />
+           : 
+           ""} 
+           <p style={{ color: "red" }}>{errorMessage ? errorMessage : ""}</p>
         </form>
-        <PhoneNumber setTelephone={setTelephone} setPassword={setPassword}/>
       </div>
     </div>
   );
