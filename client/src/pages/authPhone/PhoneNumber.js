@@ -1,10 +1,9 @@
 import {useState} from 'react';
 import { authentucation } from './firebase';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth'; 
-import './App.css';
 import firebase from "./firebase";
 
-function App() {
+function PhoneNumber({setTelephone,setPassword,password}) {
   const [codeArea,setCodeArea] = useState("+972");
   const [phoneNumber,setPhoneNumber] = useState(codeArea);
   const [expandForm,setExpandForm] = useState(false);
@@ -19,19 +18,15 @@ function App() {
     }, authentucation);
   }
 
-  const veriftOTP = (e) =>{
-    let otp = e.target.value;
-    setOTP(otp);
-    if(otp.length == 6){
+  const veriftOTP = () =>{
+    
+    if(OTP.length == 6){
       let confirmationResult = window.ConfirmationResult;
-      confirmationResult.confirm(otp).then((result) => {
-        
-        const user = result.user;
-        console.log(user);
-        console.log(result);
-        
+      confirmationResult.confirm(OTP).then((result) => {
+        setTelephone(phoneNumber);
+        setPassword(OTP)
       }).catch((error) => {
-        
+        console.log(error);
       });
     }
   }
@@ -53,9 +48,9 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <form onSubmit={requestOTP}>
-        <label>Sign in with phone number</label><br/>
+    <>
+      <div >
+        <label>PHONE-NUMBER</label><br/>
         <select onChange={(e)=>{
           setCodeArea(e.target.value)
           }} >
@@ -71,17 +66,18 @@ function App() {
           }
           setPhoneNumber(codeArea+number)
         }}></input><br/>
-        <button type="submit">send</button>
+        <button type="button" onClick={requestOTP}>send</button>
       {expandForm?<div>
-        <h3>OTP</h3>
         <h5>Enter the code sent to you</h5>
-        <input type="text" id='otpInput' value={OTP} onChange={veriftOTP}/><br/><br/>
+        <input type="text" id='otpInput' value={OTP} onChange={(e)=>{
+          setOTP(e.target.value);
+        }}/><br/><br/>
+        {!password?<button onClick={veriftOTP}>confirm</button>:""}
       </div>:null}
       
-      </form>
-      <div id="recaptcha-container"></div>
-    </div>
+      </div>
+      <div id="recaptcha-container"></div></>
   );
 }
 
-export default App;
+export default PhoneNumber;

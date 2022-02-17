@@ -1,5 +1,7 @@
 import mongo from "mongodb";
 import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
+
 dotenv.config();
 const MongoClient = mongo.MongoClient;
 const objectID = mongo.ObjectId;
@@ -23,9 +25,45 @@ const registerVolunteers = async (req, res) => {
 
     const volunteer = req.body;
 
+    const hashPasswrd = await bcrypt.hash(volunteer.password, 12);
+
+    volunteer.password = hashPasswrd;
+
     const result = await collection.insertOne(volunteer);
 
     res.status(201).send(result);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    client.close();
+  }
+};
+
+const loginVolunteers = async (req, res) => {
+  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+    throw err;
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(DATA_BASE);
+
+    const collection = db.collection(volunteerCollection);
+
+    const phoneNumber = req.body.phoneNumber;
+
+    const result = await collection.findOne({ phoneNumber });
+
+    bcrypt.compare(req.body.password, result.password, (error, response) => {
+      if (response) {
+        res.status(200).send(result);
+      } else {
+        res.sendStatus(401);
+      }
+    });
   } catch (err) {
     console.log(err);
   } finally {
@@ -64,50 +102,55 @@ const searchVolunteer = async (req, res) => {
   }
 };
 
+const getVolunteers = async (req, res) => {
+  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+    throw err;
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(DATA_BASE);
+
+    const collection = db.collection(volunteerCollection);
+
+    const result = await collection.find({}).toArray();
+
+    console.log(result);
+
+    res.send(result);
+    // if (result.length) {
+    //   res.status(200).send(result);
+    // } else {
+    //   res.sendStatus(404);
+    // }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    client.close();
+  }
+};
+
 // const searchByCity = async (req, res) => {
 //     const client = await MongoClient.connect(MONGO_URL).catch((err) => {
 //       throw err;
 //     });
-  
+
 //     if (!client) {
 //       return;
 //     }
-  
+
 //     try {
 //       const db = client.db(DATA_BASE);
-  
+
 //       const collection = db.collection(volunteerCollection);
-  
+
 //       const city = req.body.city;
-  
+
 //       const result = await collection.find(city).toArray();
-  
-//       res.status(201).send(result);
-//     } catch (err) {
-//       console.log(err);
-//     } finally {
-//       client.close();
-//     }
-//   };
-  
-//   const searchOccupation = async (req, res) => {
-//     const client = await MongoClient.connect(MONGO_URL).catch((err) => {
-//       throw err;
-//     });
-  
-//     if (!client) {
-//       return;
-//     }
-  
-//     try {
-//       const db = client.db(DATA_BASE);
-  
-//       const collection = db.collection(occupationCollection);
-  
-//       const occupation = req.body.occupation;
-  
-//       const result = await collection.find(occupation).toArray();
-  
+
 //       res.status(201).send(result);
 //     } catch (err) {
 //       console.log(err);
@@ -116,4 +159,30 @@ const searchVolunteer = async (req, res) => {
 //     }
 //   };
 
-export { registerVolunteers, searchVolunteer };
+//   const searchOccupation = async (req, res) => {
+//     const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+//       throw err;
+//     });
+
+//     if (!client) {
+//       return;
+//     }
+
+//     try {
+//       const db = client.db(DATA_BASE);
+
+//       const collection = db.collection(occupationCollection);
+
+//       const occupation = req.body.occupation;
+
+//       const result = await collection.find(occupation).toArray();
+
+//       res.status(201).send(result);
+//     } catch (err) {
+//       console.log(err);
+//     } finally {
+//       client.close();
+//     }
+//   };
+
+export { registerVolunteers, searchVolunteer, getVolunteers, loginVolunteers };
