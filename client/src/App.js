@@ -5,7 +5,6 @@ import Home from './pages/home/Home';
 import About from './pages/about/About';
 import LogIn from './pages/login/LogIn';
 import Register from './pages/register/Register';
-import Search from './pages/search/Search';
 import Navigation from "./components/Navigation";
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +16,10 @@ function App() {
     i18n.changeLanguage(lang);
 
   }
+import { useState } from "react";
+
+function App() {
+const [auth,setAuth]=useState(null);
   return (
     <BrowserRouter>
     <div className="App">
@@ -27,8 +30,7 @@ function App() {
         <Route exact path='/' component={Home}/>
         <Route exact path='/About' render={()=><About/>}/>
         <Route exact path='/LogIn' render={()=><LogIn/>}/>
-        <Route exact path='/Register' render={()=><Register/>}/>
-        <Route exact path='/Search' render={()=><Search/>}/>
+        <Route exact path='/Register' render={()=><Register auth={auth} setAuth={setAuth}/>}/>
     </Switch>
     <footer>{t('footer.1')}</footer>
     </div>
