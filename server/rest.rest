@@ -2,20 +2,18 @@ POST http://localhost:5000/api/volunteers/register
 Content-Type: application/json
 
 {
-    "name": "Ezra",
-    "lastName": "Dasa",
-    "email": "ezra@gmail.com",
-    "city": "Lod",
-    "password": "12345234",
-    "phoneNumber": "+97251212121",
-    "occupation": "Electritcian",
-    "category": "Elderly",
-    "gender": "male",
-    "profileImg": "",
-    "start": "10:30",
-    "end": "19:00"
+    "FullName": "LemLem Maharto",
+    "email": "lemlem@gmail.com",
+    "city": "tel aviv - yafo",
+    "password": "500500500",
+    "phoneNumber": "+9720503645592",
+    "occupation": ["Food distribution"],
+    "category": ["Immigrants"],
+    "gender": "Female",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPgp8ZtTbXi1_MWqsmKWDDaFIIPkNDExtyFw&usqp=CAU",
+    "start": "11:00",
+    "end": "14:00"
 }
-
 
 ###
 
@@ -54,3 +52,4 @@ Content-Type: application/json
     "phoneNumber": "+97251212121",
     "password": "123452"
 }
+
