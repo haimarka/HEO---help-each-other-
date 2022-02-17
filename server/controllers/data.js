@@ -5,11 +5,14 @@ dotenv.config();
 const MongoClient = mongo.MongoClient;
 const objectID = mongo.ObjectId;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
+console.log(MONGO_URL);
 const DATA_BASE = "freeToHelp";
 const dataCollection = "data";
 
 const dataJson = fs.readFileSync("./public/data.json", "utf8");
 const data = JSON.parse(dataJson);
+
+
 
 const createData = async (req, res) => {
   const client = await MongoClient.connect(MONGO_URL).catch((err) => {
