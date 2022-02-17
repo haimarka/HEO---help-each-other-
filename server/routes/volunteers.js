@@ -4,6 +4,7 @@ import {
   searchVolunteer,
   getVolunteers,
   loginVolunteers,
+  getVolunteer,
 } from "../controllers/volunteers.js";
 
 const router = Router();
@@ -14,6 +15,10 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   loginVolunteers(req, res);
+});
+
+router.get("/:id", (req, res) => {
+  getVolunteer(req, res);
 });
 
 router.get("/fetch", (req, res) => {

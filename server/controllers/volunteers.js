@@ -99,8 +99,10 @@ const searchVolunteer = async (req, res) => {
     const list = new Array();
 
     for (let index = 0; index < result.length; index++) {
-
-      if (result[index].occupation.includes(occupation) || result[index].occupation.includes("other")) {
+      if (
+        result[index].occupation.includes(occupation) ||
+        result[index].occupation.includes("other")
+      ) {
         list.push(result[index]);
       }
     }
@@ -116,6 +118,37 @@ const searchVolunteer = async (req, res) => {
     client.close();
   }
 };
+
+const getVolunteer = async (req, res) => {
+  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+    throw err;
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(DATA_BASE);
+
+    const collection = db.collection(volunteerCollection);
+
+    const result = await collection.findOne({_id: objectID(req.params.id)});
+
+    console.log(result);
+
+    res.send(result);
+    if (result.length) {
+      res.status(200).send(result);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    client.close();
+  }
+}
 
 const getVolunteers = async (req, res) => {
   const client = await MongoClient.connect(MONGO_URL).catch((err) => {
@@ -141,6 +174,32 @@ const getVolunteers = async (req, res) => {
     } else {
       res.sendStatus(404);
     }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    client.close();
+  }
+};
+
+const updateVolunteers = async (req, res) => {
+  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+    throw err;
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(DATA_BASE);
+
+    const collection = db.collection(volunteerCollection);
+
+    const query = { _id: objectID(req.params.id) };
+
+    const result = collection.findOneAndUpdate(query, { $set: req.body });
+
+    res.status(201).send(result);
   } catch (err) {
     console.log(err);
   } finally {
@@ -178,4 +237,5 @@ export {
   getVolunteers,
   loginVolunteers,
   findVolunteer,
+  getVolunteer
 };
