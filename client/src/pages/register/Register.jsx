@@ -29,17 +29,8 @@ const Register = ({ setAuth }) => {
   }, []);
 
   const registerForm = async () => {
-
+    setErrorMessage("");
       setLoading(true);
-    const result = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${fireBaseApi}`,
-      {
-        email,
-        password,
-      }
-    );
-      console.log(result);
-    if(result.status == 201){
       const newUser = {
         fullName: fullName,
             email: email,
@@ -53,23 +44,21 @@ const Register = ({ setAuth }) => {
             end: end,
       }
       const user = await axios.post("/api/volunteers/register", newUser);
-      if(result.status == 201){
-        setErrorMessage("");
-      }
-    }else{
-      const errorMessage = result.response.data.error.message;
-      console.log(errorMessage);
-        setErrorMessage(errorMessage);
-    }
+      if(user.status != 201){
+        const errorMessage = user.response.data.error.message;
+        console.log(errorMessage);
+          setErrorMessage(errorMessage);
+        }
     setLoading(false);
-  };
+};
+
   return (
     <div className={style.BoxContainer}>
       <div className={style.container}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (!password){
+            if (password){
               registerForm();}
           }}
         >
@@ -232,7 +221,7 @@ const Register = ({ setAuth }) => {
             }
           </div>
         <PhoneNumber setTelephone={setTelephone} setPassword={setPassword} password={password}/>
-          {!password ? 
+          {password ? 
            <input
            className={style.SubmitButton}
            autoComplete="on"
