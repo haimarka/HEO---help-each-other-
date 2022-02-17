@@ -10,9 +10,21 @@ import { useState } from "react";
 
 function App() {
 const [auth,setAuth]=useState(null);
+import { useTranslation } from 'react-i18next';
+
+
+
+function App() {
+  const { t, i18n } = useTranslation();
+  const handleClick = (lang)=>{
+    i18n.changeLanguage(lang);
+
+  }
   return (
     <BrowserRouter>
     <div className="App">
+      <button onClick={()=>handleClick('en')} > english </button>
+      <button onClick={()=>handleClick('il')} > עברית </button>
       <Navigation/>
     <Switch> 
         <Route exact path='/' component={Home}/>
@@ -20,7 +32,7 @@ const [auth,setAuth]=useState(null);
         <Route exact path='/LogIn' render={()=><LogIn/>}/>
         <Route exact path='/Register' render={()=><Register auth={auth} setAuth={setAuth}/>}/>
     </Switch>
-    <footer>Free To Help 2022 &copy;</footer>
+    <footer>{t('footer.1')}</footer>
     </div>
   </BrowserRouter>
   
