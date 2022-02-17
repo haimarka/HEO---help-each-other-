@@ -1,10 +1,32 @@
-POST http://localhost:5000/register/volunteer
+POST http://localhost:5000/api/volunteers/register
 Content-Type: application/json
 
 {
-    "name": "test",
-    "lastName": "nnn",
-    "email": "ajkvdvi@gmail.com",
+    "name": "Dana",
+    "lastName": "Levi",
+    "email": "dana@gmail.com",
     "city": "Lod",
-    "phoneNumber": "050cd1234567"
+    "phoneNumber": "+972545807641",
+    "occupation": "General",
+    "category": "Elderly",
+    "gender": "male",
+    "profileImg": "",
+    "available": ""
 }
+
+
+###
+POST http://localhost:5000/api/users/register
+Content-Type: application/json
+
+{
+    "phoneNumber": "+972541234567",
+    "occupation" : "Food distribution"
+    
+}
+
+###
+GET http://localhost:5000/api
+
+###
+GET  http://localhost:5000/data
