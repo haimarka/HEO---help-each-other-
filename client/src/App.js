@@ -9,10 +9,6 @@ import Navigation from "./components/navigation/Navigation";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
 
-// function App() {
-  
-  
-  
   function App() {
   const [auth,setAuth]=useState(null);
   const { t, i18n } = useTranslation();
