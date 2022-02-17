@@ -49,8 +49,8 @@ function PhoneNumber({setTelephone,setPassword,password}) {
 
   return (
     <>
-      <div >
-        <label>PHONE-NUMBER</label><br/>
+        <h5>PHONE-NUMBER</h5><br/>
+      <div style={{display:"flex" ,justifyContent:"center"}}>
         <select onChange={(e)=>{
           setCodeArea(e.target.value)
           }} >
@@ -59,19 +59,24 @@ function PhoneNumber({setTelephone,setPassword,password}) {
           <option >+44</option>
           <option >+251</option>
         </select>
-        <input type="text" id='phoneNumberInput' placeholder='053*******' onBlur={(e)=>{
+        
+        <input type="text"  className="checkbox" style={{width:"40%"}} id='phoneNumberInput' placeholder='053*******' onBlur={(e)=>{
           let number = e.target.value; 
           if(number[0]=== "0"){
             number = number.substring(1)
           }
           setPhoneNumber(codeArea+number)
         }}></input><br/>
-        <button type="button" onClick={requestOTP}>send</button>
+        <button type="button" style={{width:"20%"}} className='btn login_btn' onClick={requestOTP}>send</button>
       {expandForm?<div>
         <h5>Enter the code sent to you</h5>
-        <input type="text" id='otpInput' value={OTP} onChange={(e)=>{
+        <div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+        <input  type="text" id='otpInput' value={OTP} onChange={(e)=>{
           setOTP(e.target.value);
-        }}/><br/><br/>
+        }}/></div><br/><br/>
         {!password?<button onClick={veriftOTP}>confirm</button>:""}
       </div>:null}
       
