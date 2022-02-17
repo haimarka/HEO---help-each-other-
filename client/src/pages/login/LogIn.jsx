@@ -1,14 +1,21 @@
 import axios from 'axios';
 import {useState} from 'react';
 
-export default function LogIn() {
+export default function LogIn({auth , setAuth}) {
   const [phoneNumber,setPhoneNumber] = useState("");
   const [password,setPassword] = useState("");
-  function postLogin(e) {
+
+  
+
+async  function postLogin(e) {
     e.preventDefault()
-    axios.post("/api/volunteers/login",{phoneNumber,password})
-    .then((res)=>{console.log(res);})
-    .catch((err)=>{console.log(err);})
+    try {
+      const response = await axios.post("/api/volunteers/login",{phoneNumber,password})
+      setAuth(response.data._id)
+      localStorage.setItem("user",JSON.stringify(response.data._id)) 
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <form onSubmit={postLogin}>

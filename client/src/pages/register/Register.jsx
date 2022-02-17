@@ -23,8 +23,7 @@ const Register = ({ setAuth }) => {
   const [fileSelect, setFileSelect] = useState(null);
   const [fileLink, setFileLink] = useState(null);
 
-  console.log(fileLink);
-  console.log(fileSelect);
+ 
 
   useEffect(() => {
     axios
@@ -40,8 +39,6 @@ const Register = ({ setAuth }) => {
   }
 
   const fileUpload = async () => {
-
-      console.log("////////////");
       const formData = new FormData();
       formData.append("file", fileSelect);
       formData.append("upload_preset", "uv3tfvmx");
