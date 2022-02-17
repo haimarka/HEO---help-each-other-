@@ -3,9 +3,9 @@ import axios from "axios";
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Home from './pages/home/Home';
 import About from './pages/about/About';
-import LogIn from './pages/login/LogIn';
-import Register from './pages/register/Register';
-import Navigation from "./components/Navigation";
+import NeedHelp from "./pages/needHelp/NeedHelp";
+import WantToVolunteer from "./pages/wantToVolunteer/WantToVolunteer";
+import Navigation from "./components/navigation/Navigation";
 import { useState } from "react";
 
 function App() {
@@ -17,8 +17,8 @@ const [auth,setAuth]=useState(null);
     <Switch> 
         <Route exact path='/' component={Home}/>
         <Route exact path='/About' render={()=><About/>}/>
-        <Route exact path='/LogIn' render={()=><LogIn/>}/>
-        <Route exact path='/Register' render={()=><Register auth={auth} setAuth={setAuth}/>}/>
+        <Route exact path='/NeedHelp' render={()=><NeedHelp/>}/>
+        <Route exact path='/WantToVolunteer' render={()=><WantToVolunteer  setAuth={setAuth}/>}/>
     </Switch>
     <footer>Free To Help 2022 &copy;</footer>
     </div>

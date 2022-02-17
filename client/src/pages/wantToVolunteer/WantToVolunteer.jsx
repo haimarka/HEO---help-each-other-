@@ -4,7 +4,7 @@ import axios from "axios";
 import { Spinner } from "react-bootstrap";
 import PhoneNumber from "../authPhone/PhoneNumber";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import style from "./register.module.css";
+import style from "./wantToVolunteer.module.css";
 import { async, isIndexedDBAvailable } from "@firebase/util";
 const Register = ({ setAuth }) => {
   const [data, setData] = useState([]);
