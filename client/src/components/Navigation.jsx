@@ -9,7 +9,6 @@ export default function
         <Link to='/About'>About</Link>
         <Link to='/LogIn'>LogIn</Link>
         <Link to='/Register'>Register</Link>
-        <Link to='/Search'>Search</Link>
     </div>
   )
 }
