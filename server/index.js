@@ -2,10 +2,6 @@ import express from "express";
 
 const PORT = process.env.PORT || 5000;
 
-// import { registerVolunteers ,clientRegister} from "./controllers/register.js";
-import { searchByCity } from "./controllers/search.js";
-import {createData, getData} from "./controllers/data.js"
-
 import usersRouter from "./routes/users.js";
 import volunteersRouter from "./routes/volunteers.js";
 import dataRouter from "./routes/data.js";
@@ -26,6 +22,7 @@ app.use('/api/volunteers', volunteersRouter);
 app.use('/api/data', dataRouter);
 
 
+<<<<<<< HEAD
 
 
 // app.get("/api",(req,res)=>{
@@ -48,6 +45,8 @@ app.use('/api/data', dataRouter);
 //   clientRegister(req, res);
 // });
 
+=======
+>>>>>>> 39f535425d9dc2ed351d242895374c378e474c2c
 app.listen(PORT, () => {
   console.log(`server is loading ...... ${PORT}`);
 });
