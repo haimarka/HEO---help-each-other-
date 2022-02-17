@@ -54,7 +54,6 @@ export default function Home() {
         <button type="submit">submit</button>
       </form>
       <div>
-        
       </div>
     </div>
   );

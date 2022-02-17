@@ -5,14 +5,13 @@ import Home from './pages/home/Home';
 import About from './pages/about/About';
 import LogIn from './pages/login/LogIn';
 import Register from './pages/register/Register';
-import Search from './pages/search/Search';
 import Navigation from "./components/Navigation";
 
 function App() {
   
   return (
     <BrowserRouter>
-    <div className="App">
+    <div className='App' >
       <Navigation/>
       
     <Switch> 
@@ -20,9 +19,8 @@ function App() {
         <Route exact path='/About' render={()=><About/>}/>
         <Route exact path='/LogIn' render={()=><LogIn/>}/>
         <Route exact path='/Register' render={()=><Register/>}/>
-        <Route exact path='/Search' render={()=><Search/>}/>
     </Switch>
-    <footer>Free To Help 2022 &copy;</footer>
+    <footer >Free To Help 2022 &copy;</footer>
     </div>
   </BrowserRouter>
   
