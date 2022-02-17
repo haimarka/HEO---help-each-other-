@@ -1,4 +1,4 @@
-import "./App.css";
+
 import axios from "axios";
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Home from './pages/home/Home';
@@ -8,8 +8,6 @@ import Register from './pages/register/Register';
 import Navigation from "./components/Navigation";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
-
-
 
   
   function App() {

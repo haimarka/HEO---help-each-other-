@@ -4,8 +4,8 @@ import fireBaseApi from "../../logic/key";
 import { Spinner } from "react-bootstrap";
 import PhoneNumber from "../authPhone/PhoneNumber";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import style from "./register.module.css";
-import { async, isIndexedDBAvailable } from "@firebase/util";
+// import style from "./register.css";
+// import { async, isIndexedDBAvailable } from "@firebase/util";
 const Register = ({ setAuth }) => {
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
@@ -20,13 +20,42 @@ const Register = ({ setAuth }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const [fileSelect, setFileSelect] = useState(null);
+  const [fileLink, setFileLink] = useState(null);
+
+  console.log(fileLink);
+  console.log(fileSelect);
 
   useEffect(() => {
     axios
       .get("/api/data/fetch")
-      .then((res) => setData(res.data[0]))
+      .then((res) => setData(res.data[0]) )
       .catch((err) => err);
   }, []);
+
+  console.log(data);
+
+  const fileSelectHandler = event=> {
+    setFileSelect(event.target.files[0]);
+  }
+
+  const fileUpload = async () => {
+
+      console.log("////////////");
+      const formData = new FormData();
+      formData.append("file", fileSelect);
+      formData.append("upload_preset", "uv3tfvmx");
+  
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/ddemqansf/image/upload",   
+        formData
+        );
+        
+        setFileLink(response.data.url) 
+    
+  };
+
+
 
   const registerForm = async () => {
     setErrorMessage("");
@@ -34,16 +63,18 @@ const Register = ({ setAuth }) => {
       const newUser = {
         fullName: fullName,
             email: email,
-            telephone: telephone,
+            PhoneNumber: telephone,
             city: city,
             password: password,
             gender: gender,
-            occupations: occupations.length?["other"]:occupations,
-            categories: categories.length?["other"]:occupations,
+            image : fileLink ,
+            occupation: occupations.length?["other"]:occupations,
+            category: categories.length?["other"]:occupations,
             start: start,
             end: end,
       }
       const user = await axios.post("/api/volunteers/register", newUser);
+      console.log(user);
       if(user.status != 201){
         const errorMessage = user.response.data.error.message;
         console.log(errorMessage);
@@ -52,9 +83,13 @@ const Register = ({ setAuth }) => {
     setLoading(false);
 };
 
+
+
+
   return (
-    <div className={style.BoxContainer}>
-      <div className={style.container}>
+
+    <div >
+      <div >
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -62,18 +97,20 @@ const Register = ({ setAuth }) => {
               registerForm();}
           }}
         >
-          <img
-            className={style.brandLogo}
-            src="https://i.ibb.co/KmpTG7h/Free-To-Help.png"
-            width="5%"
-            height="5%"
-          />
-          <p className={style.brandTitle}>FreeToHelp</p>
-          <div className={style.inputs}>
+         <input
+      type="file"
+      accept="image/*"
+      onChange={fileSelectHandler}
+    />
+    <br />
+    <button onClick={() => fileUpload()}>upload</button>
+   
+          <p >FreeToHelp</p>
+          <div >
             <label>FULL-NAME</label>
             <br />
             <input
-              className={style.Input}
+              
               type="text"
               placeholder="Full-Name"
               required
@@ -85,7 +122,7 @@ const Register = ({ setAuth }) => {
             <label>EMAIL</label>
             <br />
             <input
-              className={style.Input}
+              
               type="email"
               placeholder="example@test.com"
               onBlur={(e) => {
@@ -187,12 +224,12 @@ const Register = ({ setAuth }) => {
                   setGender(e.target.value);
                 }}>
               <option
-                value="MEN"
+                value="Male"
               >
                 MEN
               </option>
               <option
-                value="WOMEN"
+                value="Female"
               >
                 WOMEN
               </option>
@@ -223,7 +260,7 @@ const Register = ({ setAuth }) => {
         <PhoneNumber setTelephone={setTelephone} setPassword={setPassword} password={password}/>
           {password ? 
            <input
-           className={style.SubmitButton}
+           
            autoComplete="on"
            type="submit"
            value="Register"
@@ -232,6 +269,7 @@ const Register = ({ setAuth }) => {
            ""} 
            <p style={{ color: "red" }}>{errorMessage ? errorMessage : ""}</p>
         </form>
+        <img src={fileLink}/>
       </div>
     </div>
   );
