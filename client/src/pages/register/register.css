@@ -1,0 +1,79 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.container{
+    margin-top: 90px;
+}
+.user_card {
+    height: 1200px;
+    width: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #e1a99da9;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+
+}
+.brand_logo_container {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    top: -55px;
+    border-radius: 50%;
+    background: #4a6877b6;
+    padding: 10px;
+    text-align: center;
+}
+.brand_logo {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.form_container {
+    margin-top: -490px;
+}
+.login_btn {
+    width: 100%;
+    background: #c0392b !important;
+    color: white !important;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+.input-group-text {
+    background: #4a6877be !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.checkbox{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 2;
+    grid-column-gap: 2.2rem;
+    justify-content: start;
+}
+input[type="checkbox"]{
+    display: flex;
+}
