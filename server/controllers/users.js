@@ -1,5 +1,7 @@
 import mongo from "mongodb";
 import dotenv from "dotenv";
+import { addUsersToStatistics } from "./statistics.js";
+
 dotenv.config();
 const MongoClient = mongo.MongoClient;
 const objectID = mongo.ObjectId;
@@ -14,33 +16,29 @@ async function clientRegister(req, res) {
   }
 
   try {
-    console.log("Connected correctly to server");
     const db = client.db(DATA_BASE);
     const foundResult = await db
       .collection(clientCollection)
       .findOne({ phoneNumber: req.body.phoneNumber });
-    console.log(foundResult);
 
     if (foundResult) {
-      console.log("found");
       const updateResult = await db
         .collection(clientCollection)
         .updateOne(
           { phoneNumber: req.body.phoneNumber },
           { $push: { occupation: req.body.occupation } }
         );
-      console.log(updateResult);
+      addUsersToStatistics(foundResult);
       res.sendStatus(201);
     } else {
-      const user = {};
-      user.phoneNumber = req.body.phoneNumber;
+      const user = { phoneNumber: req.body.phoneNumber, city: req.body.city };
       user.occupation = [req.body.occupation];
-      console.log("not found");
       const insertResult = await db
         .collection(clientCollection)
         .insertOne(user);
-      console.log(insertResult);
       res.sendStatus(201);
+      const userData = findUser(insertResult.insertedId);
+      addUsersToStatistics(userData);
     }
   } catch (err) {
     console.log(err.stack);
@@ -48,5 +46,29 @@ async function clientRegister(req, res) {
 
   client.close();
 }
+
+const findUser = async (id) => {
+  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+    throw err;
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(DATA_BASE);
+
+    const collection = db.collection(clientCollection);
+
+    const result = await collection.findOne({ _id: objectID(id) });
+
+    return result;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    client.close();
+  }
+};
 
 export { clientRegister };

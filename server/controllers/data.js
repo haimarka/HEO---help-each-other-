@@ -54,7 +54,7 @@ const getData = async (req, res) => {
 
     const result = await collection.find({}).toArray();
 
-    res.status(201).send(result);
+    res.status(200).send(result);
   } catch (err) {
     console.log(err);
   } finally {

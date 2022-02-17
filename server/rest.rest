@@ -30,8 +30,9 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "phoneNumber": "+972541234567",
-    "occupation" : "Food distribution"
+    "phoneNumber": "+972541232222",
+    "occupation" : "Food distribution",
+    "city": "Lod"
     
 }
 
@@ -39,7 +40,7 @@ Content-Type: application/json
 GET http://localhost:5000/api/data/fetch
 
 ###
-GET http://localhost:5000/api/volunteers/volunteer/Lod/Gen
+GET http://localhost:5000/api/volunteers/volunteer/tel%20aviv%20-%20yafo/Assistance%20for%20the%20elderly
 
 ###
 GET http://localhost:5000/api/volunteers/fetch
@@ -53,3 +54,11 @@ Content-Type: application/json
     "password": "123452"
 }
 
+<<<<<<< HEAD
+=======
+###
+GET http://localhost:5000/api/statistics/volunteer/city
+
+###
+GET http://localhost:5000/api/statistics/user/city
+>>>>>>> 9cd9def76535d667edff7cf40e7adefcc5008ee7
