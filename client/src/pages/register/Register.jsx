@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React ,{useEffect}from 'react'
 import axios from "axios"
-
-
-
-
 export default function Register() {
 
 useEffect(  () => { 
@@ -20,75 +15,6 @@ useEffect(  () => {
 }, []);
   
 
-=======
-import { useEffect, useState } from "react";
-import axios from "axios";
-import fireBaseApi from "../../logic/key";
-import { Spinner } from "react-bootstrap";
-import PhoneNumber from "../authPhone/PhoneNumber";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import style from "./register.module.css";
-const Register = ({ setAuth }) => {
-  const [data, setData] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [telephone, setTelephone] = useState("");
-  const [city, setCity] = useState("");
-  const [categorys, setCategorys] = useState("");
-  const [occupations, setOccupations] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("/api/data/fetch")
-      .then((res) => setData(res.data[0]))
-      .catch((err) => err);
-  }, []);
-
-  const registerForm = () => {
-    setLoading(true);
-    axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${fireBaseApi}`,
-        {
-          email,password
-        }
-      )
-      .then(function (response) {
-        axios
-          .post("/api/volunteers/register", {
-            fullName: fullName,
-            email: email,
-            telephone: telephone,
-            city: city,
-            password,
-            occupations: occupations,
-            categorys: categorys,
-          })
-          .then(function (res) {
-            console.log(res.data, "resData");
-          })
-          .catch(function (error) {
-            console.log(error.res);
-          });
-        setLoading(false);
-        setAuth(response.data);
-        // JSON.stringify(response.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-        const errorMessage = error.response.data.error.message;
-        console.log(errorMessage);
-        setErrorMessage(errorMessage);
-        setLoading(false);
-      });
-  };
-  
->>>>>>> 4b8adf7d76c2e842cf0de3449dfbd4c66751cbaf
   return (
     <div className={style.BoxContainer}>
       <div className={style.container}>
