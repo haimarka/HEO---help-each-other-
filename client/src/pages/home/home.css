@@ -12,6 +12,7 @@
     flex-shrink: 0;
     animation: move 25s alternate infinite;
     animation-delay: 1s;
+    border: 3px solid whitesmoke;
 }
 
 .cardsContainer .card img {
@@ -35,4 +36,26 @@
     100% {
         transform: translateX(-390%);
     }
+}
+.howItWorks{
+border: 5px solid whitesmoke;
+background-color: #e1a99d;
+/* padding: 70px; */
+color: whitesmoke;
+text-decoration: none;
+font-size: 70px;
+}
+.color{
+color: red;
+font-size: 50px;
+}
+.steps{
+text-decoration: none;
+}
+.step{
+font-size: 40px;
+list-style-type: none;
+}
+.number{
+font-size: 7rem;
 }
