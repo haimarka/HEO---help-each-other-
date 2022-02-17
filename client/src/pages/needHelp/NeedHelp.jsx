@@ -1,10 +1,12 @@
-import {useEffect,useState} from 'react';
+import {useState} from 'react';
 import axios from 'axios';
 import style from './needHelp.module.css';
+import PhoneNumber from '../authPhone/PhoneNumber';
 
 export default function NeedHelp() {
-
-  const [cities,setCities] = useState([])
+  const [telephone,setTelephone] = useState('')
+  const [password,setPassword] = useState('')
+  const [cities,setCities] = useState('')
 
   function getCities(){
     axios.get('/api/data/fetch')
@@ -15,6 +17,11 @@ export default function NeedHelp() {
       console.log(err);
     })
   }
+  function askForHelp() {
+    axios
+    .post('/api/users/register',{phoneNumber:telephone,city:cities,occupation:password})
+    .then
+  }
 
   return (
     <form style={{display:"flex",justifyContent:"center"}}>
@@ -23,11 +30,12 @@ export default function NeedHelp() {
             <label>Professional / occupation help:</label><br/>
             <label>phone:</label><br/>
         </div> 
-        <div className={style.inputUser}>
+        <PhoneNumber setCities={setCities} setPassword={setPassword} setTelephone={setTelephone}/>
+        {<div className={style.inputUser}>
             <input/><br/>
             <input/><br/>
             <input/><br/>
-        </div> 
+        </div>} 
     </form>
   )
 }
