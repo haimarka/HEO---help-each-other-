@@ -2,18 +2,17 @@ POST http://localhost:5000/api/volunteers/register
 Content-Type: application/json
 
 {
-    "name": "Ezra",
-    "lastName": "Dasa",
-    "email": "ezra@gmail.com",
-    "city": "Lod",
-    "password": "12345234",
-    "phoneNumber": "+97251212121",
-    "occupation": "Electritcian",
-    "category": "Elderly",
-    "gender": "male",
-    "profileImg": "",
-    "start": "10:30",
-    "end": "19:00"
+    "fullName": "Gila Ronnen",
+            "email": "gila@gmail.com",
+            "city": "lod",
+            "password": "12453288",
+            "phoneNumber": "+972509090890",
+            "occupation": ["Air conditioning technicians"],
+            "category": ["Other"],
+            "gender": "Female",
+            "img": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+            "start": "18:00",
+            "end": "19:40"
 }
 
 
@@ -32,8 +31,9 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "phoneNumber": "+972541234567",
-    "occupation" : "Food distribution"
+    "phoneNumber": "+972541232222",
+    "occupation" : "Food distribution",
+    "city": "Lod"
     
 }
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 GET http://localhost:5000/api/data/fetch
 
 ###
-GET http://localhost:5000/api/volunteers/volunteer/Lod/Gen
+GET http://localhost:5000/api/volunteers/volunteer/tel%20aviv%20-%20yafo/Assistance%20for%20the%20elderly
 
 ###
 GET http://localhost:5000/api/volunteers/fetch
@@ -54,3 +54,9 @@ Content-Type: application/json
     "phoneNumber": "+97251212121",
     "password": "123452"
 }
+
+###
+GET http://localhost:5000/api/statistics/volunteer/city
+
+###
+GET http://localhost:5000/api/statistics/user/city
