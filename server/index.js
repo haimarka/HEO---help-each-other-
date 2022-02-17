@@ -9,8 +9,8 @@ import statisticsRouter from "./routes/statistics.js";
 
 const app = express();
 app.use(express.json());
-
-
+ 
+ 
 app.post("/", (req, res) => {
   console.log('working post');
 });
