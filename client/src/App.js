@@ -7,14 +7,14 @@ import LogIn from './pages/login/LogIn';
 import Register from './pages/register/Register';
 import Navigation from "./components/Navigation";
 import { useState } from "react";
-
-function App() {
-const [auth,setAuth]=useState(null);
 import { useTranslation } from 'react-i18next';
 
-
-
-function App() {
+// function App() {
+  
+  
+  
+  function App() {
+  const [auth,setAuth]=useState(null);
   const { t, i18n } = useTranslation();
   const handleClick = (lang)=>{
     i18n.changeLanguage(lang);

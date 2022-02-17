@@ -3,7 +3,7 @@ import { authentucation } from './firebase';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth'; 
 import firebase from "./firebase";
 
-function PhoneNumber({setTelephone,setPassword}) {
+function PhoneNumber({setTelephone,setPassword,password}) {
   const [codeArea,setCodeArea] = useState("+972");
   const [phoneNumber,setPhoneNumber] = useState(codeArea);
   const [expandForm,setExpandForm] = useState(false);
@@ -26,7 +26,7 @@ function PhoneNumber({setTelephone,setPassword}) {
         setTelephone(phoneNumber);
         setPassword(OTP)
       }).catch((error) => {
-        
+        console.log(error);
       });
     }
   }
@@ -48,8 +48,8 @@ function PhoneNumber({setTelephone,setPassword}) {
   }
 
   return (
-    <div className="App">
-      <form onSubmit={requestOTP}>
+    <>
+      <div >
         <label>PHONE-NUMBER</label><br/>
         <select onChange={(e)=>{
           setCodeArea(e.target.value)
@@ -66,18 +66,17 @@ function PhoneNumber({setTelephone,setPassword}) {
           }
           setPhoneNumber(codeArea+number)
         }}></input><br/>
-        <button type="submit">send</button>
+        <button type="button" onClick={requestOTP}>send</button>
       {expandForm?<div>
         <h5>Enter the code sent to you</h5>
         <input type="text" id='otpInput' value={OTP} onChange={(e)=>{
           setOTP(e.target.value);
         }}/><br/><br/>
-        <button onClick={veriftOTP}>confirm</button>
+        {!password?<button onClick={veriftOTP}>confirm</button>:""}
       </div>:null}
       
-      </form>
-      <div id="recaptcha-container"></div>
-    </div>
+      </div>
+      <div id="recaptcha-container"></div></>
   );
 }
 
