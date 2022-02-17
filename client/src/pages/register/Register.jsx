@@ -18,12 +18,14 @@ const Register = ({ setAuth }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+
   useEffect(() => {
     axios
       .get("/api/data/fetch")
       .then((res) => setData(res.data[0]))
       .catch((err) => err);
   }, []);
+
   const registerForm = () => {
     setLoading(true);
     axios
@@ -62,6 +64,7 @@ const Register = ({ setAuth }) => {
         setLoading(false);
       });
   };
+  
   return (
     <div className={style.BoxContainer}>
       <div className={style.container}>
