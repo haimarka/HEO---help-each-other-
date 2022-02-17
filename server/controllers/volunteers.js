@@ -94,7 +94,6 @@ const searchVolunteer = async (req, res) => {
     const city = req.params.city;
     const occupation = req.params.occupation;
 
-    // const result = await collection.find({ city, occupation }).toArray();
     const result = await collection.find({ city }).toArray();
 
     const list = new Array();
