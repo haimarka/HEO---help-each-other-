@@ -1,4 +1,5 @@
 import mongo from "mongodb";
+import bcrypt from "bcryptjs"
 import dotenv from "dotenv";
 dotenv.config();
 const MongoClient = mongo.MongoClient;
@@ -10,29 +11,33 @@ const clientCollection = "clients";
 
 
 const registerVolunteers = async (req, res) => {
-  const client = await MongoClient.connect(MONGO_URL).catch((err) => {
-    throw err;
-  });
+  // const client = await MongoClient.connect(MONGO_URL).catch((err) => {
+  //   throw err;
+  // });
 
-  if (!client) {
-    return;
-  }
+  // if (!client) {
+  //   return;
+  // }
 
-  try {
-    const db = client.db(DATA_BASE);
+  // try {
+    // const db = client.db(DATA_BASE);
 
-    const collection = db.collection(volunteerCollection);
+    // const collection = db.collection(volunteerCollection);
 
-    const volunteer = req.body;
+    const pass = req.body.password
+   
+    const hashPass = await bcrypt.hash(pass,12)
+    console.log(hashPass);
+   
 
-    const result = await collection.insertOne(volunteer);
+    // const result = await collection.insertOne();
 
-    res.status(201).send(result);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    client.close();
-  }
+  //   res.status(201).send(result);
+  // } catch (err) {
+  //   console.log(err);
+  // } finally {
+  //   client.close();
+  // }
 };
 
 async function clientRegister(req, res) {

@@ -2,7 +2,7 @@ import express from "express";
 
 const PORT = process.env.PORT || 5000;
 
-// import { registerVolunteers ,clientRegister} from "./controllers/register.js";
+import { registerVolunteers ,clientRegister} from "./controllers/register.js";
 import { searchByCity } from "./controllers/search.js";
 import {createData, getData} from "./controllers/data.js"
 
@@ -32,9 +32,9 @@ app.use('/api/data', dataRouter);
 //   searchByCity(req,res)
 // })
 
-// app.post("/register/volunteer", (req, res) => {
-//   registerVolunteers(req, res);
-// });
+app.post("/register/volunteer", (req, res) => {
+  registerVolunteers(req, res);
+});
 
 // app.post("/register/client", (req, res) => {
 //   clientRegister(req, res);
