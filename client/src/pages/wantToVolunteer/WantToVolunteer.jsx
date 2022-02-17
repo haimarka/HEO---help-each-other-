@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import fireBaseApi from "../../logic/key";
+// import fireBaseApi from "../../logic/key";
 import { Spinner } from "react-bootstrap";
 import PhoneNumber from "../authPhone/PhoneNumber";
 // import "bootstrap/dist/css/bootstrap.min.css";
-// import style from "./register.css";
-// import { async, isIndexedDBAvailable } from "@firebase/util";
-const Register = ({ setAuth }) => {
+import style from "./wantToVolunteer.module.css";
+import { async, isIndexedDBAvailable } from "@firebase/util";
+const Register = ({auth , setAuth}) => {
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
