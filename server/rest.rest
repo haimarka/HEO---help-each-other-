@@ -17,6 +17,16 @@ Content-Type: application/json
 
 
 ###
+
+POST http://localhost:5000/register/volunteer
+Content-Type: application/json
+
+{
+  "password":"12345678"
+}
+
+
+###
 POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
