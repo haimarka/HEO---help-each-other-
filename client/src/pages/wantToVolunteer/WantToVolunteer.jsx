@@ -21,11 +21,12 @@ const WantToVolunteer = ({ setAuth }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  console.log(data);
 
   useEffect(() => {
     axios
       .get("/api/data/fetch")
-      .then((res) => setData(res.data[0]))
+      .then((res) => setData(res.data))
       .catch((err) => err);
   }, []);
 
@@ -79,8 +80,8 @@ const WantToVolunteer = ({ setAuth }) => {
               <h6 >FreeToHelp</h6>
               <div >
                 {/* <label>FULL-NAME</label><br /> */}
-                <div class="input-group-append">
-								  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <div className="input-group-append">
+								  <span className="input-group-text"><i className="fas fa-user"></i></span>
                 <input
                   className='form-control input_user'
                   type="text"
@@ -91,8 +92,8 @@ const WantToVolunteer = ({ setAuth }) => {
                   }}
                 />
 							  </div><br/>
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-at"></i></span>
+                <div className="input-group-append">
+                    <span className="input-group-text"><i className="fa fa-at"></i></span>
                     <input
                       className='form-control input_user'
                       type="email"
@@ -103,9 +104,10 @@ const WantToVolunteer = ({ setAuth }) => {
                     />
                 </div>
                 <br/>
-                {data.cities?.length ? (
-                  <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-city"></i></span>
+                {/* {data.length?
+                  (
+                  <div className="input-group-append">
+                    <span className="input-group-text"><i className="fa fa-city"></i></span>
                     <select className='form-control' onBlur={(e)=>{setCity(e.target.value);}}>
                       <option>city</option>
                       {data.cities.map((item, i) => {
@@ -120,11 +122,10 @@ const WantToVolunteer = ({ setAuth }) => {
                       })}
                     </select>
                   </div>
-                ) : (
-                  ""
-                )}<br/><hr/>
+                  )
+                 : ""}<br/><hr/> */}
                 <h5>CATEGORIES</h5><br/>
-                {data.categories?.length ? (
+                {data.length ? (
                   <div className="checkbox">
                     {data.categories.map((item, i) => {
                       return (
