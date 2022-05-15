@@ -59,4 +59,4 @@ Content-Type: application/json
 GET http://localhost:5000/api/statistics/volunteer/city
 
 ###
-GET http://localhost:5000/api/statistics/user/city
+GET http://localhost:5000/api/volunteers/volunteer/lod/Air%20conditioning%20technicians
